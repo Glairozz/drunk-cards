@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drunk Cards ni Ibot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="loadingScreen">
+        <div class="loader-content">
+            <h1>🍻 Drunk Cards ni Ibot</h1>
+            <p>Loading game... Please wait</p>
+            <div class="loading-bar">
+                <div class="loading-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="app">
+        <main>
+            <section id="screen1" class="screen">
+                <h1>Drunk Cards</h1>
+                <button onclick="goToScreen(2)">Click here to get drunk</button>
+            </section>
+
+            <section id="screen2" class="screen">
+                <h2>Welcome to Drunk Cards made for people who love to drink.</h2>
+                <p><strong>Rules:</strong></p>
+                <p>Everytime a person skips a card, drink twice.</p>
+                <p>That's all, enjoy the game!</p>
+                <button onclick="startGame()">Play Now</button>
+            </section>
+
+            <section id="screen3" class="screen">
+                <div id="gameArea">
+                    <div id="cardContainer">
+                        <div id="card" class="card">
+                            <div class="card-front">
+                                <span id="cardText"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <button onclick="nextCard()">Next Card</button>
+                        <button onclick="undoCard()">Undo</button>
+                        <div id="counter">Card 0 / 104</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Drunk Cards ni Ibot. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

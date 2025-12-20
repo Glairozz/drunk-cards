@@ -1,11 +1,3 @@
-window.addEventListener("load", () => {
-    setTimeout(() => {
-        const loader = document.getElementById("loadingScreen");
-        if (loader) loader.style.display = "none";
-        goToScreen(1);
-    }, 8000);
-});
-
 const cards = [
     "Take 1 shot",
     "Take 2 shots",
@@ -127,26 +119,22 @@ function shuffleDeck() {
 
 function animateCard() {
     const card = document.getElementById("card");
-    card.classList.remove("flip", "lucky", "unlucky");
+    card.classList.remove("flip", "wave");
     void card.offsetWidth;
     card.classList.add("flip");
-    const text = deck[currentIndex];
-    if (text.includes("Lucky card")) card.classList.add("lucky");
-    if (text.includes("Unlucky card")) card.classList.add("unlucky");
 }
 
 function updateCounter() {
-    const counter = document.getElementById("counter");
-    if (!counter) return;
-    counter.textContent = `Card ${currentIndex+1} / ${deck.length}`;
+    document.getElementById("counter").textContent =
+        `Card ${currentIndex + 1} / ${deck.length}`;
 }
 
 function goToScreen(n) {
     document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-    document.getElementById(`screen${n}`).classList.add("active");
+    document.getElementById("screen" + n).classList.add("active");
 }
 
-window.startGame = function() {
+function startGame() {
     shuffleDeck();
     currentIndex = 0;
     history = [];
@@ -155,12 +143,13 @@ window.startGame = function() {
     updateCounter();
     history.push(deck[currentIndex]);
     goToScreen(3);
-};
+}
 
-window.nextCard = function() {
+function nextCard() {
     currentIndex++;
     if (currentIndex >= deck.length) {
-        document.getElementById("cardText").textContent = "No more cards! Reload to reshuffle 🍻";
+        document.getElementById("cardText").textContent =
+            "No more cards! Reload to reshuffle 🍻";
         animateCard();
         return;
     }
@@ -168,24 +157,52 @@ window.nextCard = function() {
     animateCard();
     updateCounter();
     history.push(deck[currentIndex]);
-};
+}
 
-window.undoCard = function() {
+function undoCard() {
     if (history.length <= 1) return;
     history.pop();
     currentIndex--;
     document.getElementById("cardText").textContent = deck[currentIndex];
     animateCard();
     updateCounter();
-};
+}
 
 shuffleDeck();
 
-// Wave animation every 10 seconds
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        const loader = document.getElementById("loadingScreen");
+        if (loader) loader.style.display = "none";
+        goToScreen(1);
+    }, 8000);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-gotoscreen]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const screen = btn.getAttribute("data-gotoscreen");
+            goToScreen(screen);
+        });
+    });
+
+    document.querySelectorAll("[data-startgame]").forEach(btn => {
+        btn.addEventListener("click", startGame);
+    });
+
+    document.querySelectorAll("[data-nextcard]").forEach(btn => {
+        btn.addEventListener("click", nextCard);
+    });
+
+    document.querySelectorAll("[data-undocard]").forEach(btn => {
+        btn.addEventListener("click", undoCard);
+    });
+});
+
 setInterval(() => {
     const card = document.getElementById("card");
     if (card) {
         card.classList.add("wave");
-        setTimeout(() => { card.classList.remove("wave"); }, 1000);
+        setTimeout(() => card.classList.remove("wave"), 1000);
     }
 }, 10000);

@@ -23,7 +23,7 @@
         <main>
             <section id="screen1" class="screen">
                 <h1>Drunk Cards</h1>
-                <button onclick="goToScreen(2)">Click here to get drunk</button>
+                <button data-action="goto" data-screen="2">Click here to get drunk</button>
             </section>
 
             <section id="screen2" class="screen">
@@ -31,7 +31,7 @@
                 <p><strong>Rules:</strong></p>
                 <p>Everytime a person skips a card, drink twice.</p>
                 <p>That's all, enjoy the game!</p>
-                <button onclick="startGame()">Play Now</button>
+                <button data-action="start-game">Play Now</button>
             </section>
 
             <section id="screen3" class="screen">
@@ -44,8 +44,8 @@
                         </div>
                     </div>
                     <div class="controls">
-                        <button onclick="nextCard()">Next Card</button>
-                        <button onclick="undoCard()">Undo</button>
+                        <button data-action="next-card">Next Card</button>
+                        <button data-action="undo-card">Undo</button>
                         <div id="counter">Card 0 / 104</div>
                     </div>
                 </div>

@@ -7,8 +7,7 @@
     --orange: #ffa500;
     --white: #ffffff;
     --black: #000000;
-    --bg-main: linear-gradient(135deg, #1e90ff 0%, #ffa500 100%);
-    --bg-soft: #f5f7fb;
+    --bg-soft: linear-gradient(135deg, #f5f7fb, #e0e7ff);
     --radius-sm: 10px;
     --radius-md: 18px;
     --radius-lg: 28px;
@@ -42,9 +41,9 @@ body {
     color: var(--black);
     display: flex;
     flex-direction: column;
-    -webkit-font-smoothing: antialiased;
     width: 100%;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
 }
 
 #app {
@@ -61,113 +60,6 @@ main {
     justify-content: center;
     position: relative;
     padding: 20px;
-}
-
-#loadingScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--bg-main);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-    text-align: center;
-    overflow: hidden;
-}
-
-
-/* Floating shapes container */
-
-#loadingScreen .float-shape {
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
-    opacity: 0.2;
-    z-index: 0;
-    animation: floatBubble linear infinite;
-}
-
-
-/* Different shapes with varying size, position, and animation speed */
-
-.float-shape.shape1 {
-    width: 120px;
-    height: 120px;
-    top: 10%;
-    left: 20%;
-    animation-duration: 15s;
-    animation-delay: 0s;
-}
-
-.float-shape.shape2 {
-    width: 180px;
-    height: 180px;
-    top: 60%;
-    left: 70%;
-    animation-duration: 20s;
-    animation-delay: 5s;
-}
-
-.float-shape.shape3 {
-    width: 80px;
-    height: 80px;
-    top: 30%;
-    left: 50%;
-    animation-duration: 12s;
-    animation-delay: 2s;
-}
-
-.float-shape.shape4 {
-    width: 100px;
-    height: 100px;
-    top: 75%;
-    left: 25%;
-    animation-duration: 18s;
-    animation-delay: 4s;
-}
-
-.float-shape.shape5 {
-    width: 60px;
-    height: 60px;
-    top: 50%;
-    left: 80%;
-    animation-duration: 10s;
-    animation-delay: 1s;
-}
-
-.float-shape.shape6 {
-    width: 90px;
-    height: 90px;
-    top: 20%;
-    left: 75%;
-    animation-duration: 22s;
-    animation-delay: 3s;
-}
-
-@keyframes floatBubble {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.2;
-    }
-    25% {
-        transform: translate(20px, -30px) scale(1.1);
-        opacity: 0.25;
-    }
-    50% {
-        transform: translate(-30px, 20px) scale(0.95);
-        opacity: 0.2;
-    }
-    75% {
-        transform: translate(15px, 25px) scale(1.05);
-        opacity: 0.3;
-    }
-    100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.2;
-    }
 }
 
 
@@ -280,56 +172,6 @@ footer {
     font-size: 0.9rem;
 }
 
-#loadingScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--bg-main);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-    text-align: center;
-}
-
-.loader-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--white);
-}
-
-.loader-content h1 {
-    margin-bottom: 10px;
-}
-
-.loading-bar {
-    width: min(300px, 80vw);
-    height: 14px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 999px;
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-.loading-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--blue), var(--orange));
-    animation: loadingFill 8s linear forwards;
-}
-
-@keyframes loadingFill {
-    from {
-        width: 0%;
-    }
-    to {
-        width: 100%;
-    }
-}
-
 
 /* ==============================
    PART 3 — LANDING & INSTRUCTION SCREENS
@@ -366,68 +208,65 @@ footer {
 }
 
 #screen1::before,
-#screen1::after {
+#screen1::after,
+#screen2::before,
+#screen3::before {
     content: "";
     position: absolute;
-    inset: -20%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15), transparent 60%);
-    animation: backgroundDrift 20s linear infinite;
-}
-
-#screen1::after {
-    animation-duration: 30s;
-    opacity: 0.6;
+    inset: 0;
+    background: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.12) 0%, transparent 60%), radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+    animation: floatBubbles 8s linear infinite;
+    z-index: -1;
 }
 
 #screen2 {
-    background: #ffffff;
+    background: linear-gradient(160deg, #ffeaa7 0%, #fab1a0 100%);
     color: var(--black);
 }
 
 #screen2 h2 {
-    animation: textReveal 1.2s ease forwards;
+    animation: fadeSlideUpText 1s var(--ease-smooth) forwards;
 }
 
 #screen2 p {
     opacity: 0;
-    animation: textReveal 1s ease forwards;
+    transform: translateY(20px);
+    animation: fadeSlideUpText 0.8s var(--ease-smooth) forwards;
 }
 
 #screen2 p:nth-of-type(1) {
-    animation-delay: 0.3s;
+    animation-delay: 0.2s;
 }
 
 #screen2 p:nth-of-type(2) {
-    animation-delay: 0.6s;
+    animation-delay: 0.4s;
 }
 
 #screen2 p:nth-of-type(3) {
-    animation-delay: 0.9s;
+    animation-delay: 0.6s;
 }
 
-#screen2 strong {
-    display: inline-block;
-    margin-top: 15px;
-    padding-bottom: 6px;
-    position: relative;
+#screen3 {
+    background: linear-gradient(160deg, #74b9ff 0%, #a29bfe 100%);
+    color: var(--black);
 }
 
-#screen2 strong::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--blue), var(--orange));
-    animation: dividerGrow 1.2s ease forwards;
+#screen3 p {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeSlideUpText 0.8s var(--ease-smooth) forwards;
 }
 
-#screen2 button {
-    margin-top: 35px;
-    font-size: 1.3rem;
-    padding: 18px 48px;
-    animation: softBounce 4s infinite;
+#screen3 p:nth-of-type(1) {
+    animation-delay: 0.2s;
+}
+
+#screen3 p:nth-of-type(2) {
+    animation-delay: 0.4s;
+}
+
+#screen3 p:nth-of-type(3) {
+    animation-delay: 0.6s;
 }
 
 @keyframes titleFloat {
@@ -462,42 +301,36 @@ footer {
     }
 }
 
-@keyframes backgroundDrift {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes textReveal {
-    from {
+@keyframes floatBubbles {
+    0% {
+        transform: translateY(100%) scale(0.8);
         opacity: 0;
-        transform: translateY(15px);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes dividerGrow {
-    from {
-        width: 0%;
-    }
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes softBounce {
-    0%,
-    100% {
-        transform: translateY(0);
+    20% {
+        opacity: 0.4;
     }
     50% {
-        transform: translateY(-8px);
+        transform: translateY(50%) scale(1);
+        opacity: 0.6;
+    }
+    80% {
+        transform: translateY(20%) scale(0.8);
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-10%) scale(0.6);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeSlideUpText {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -505,11 +338,6 @@ footer {
 /* ==============================
    PART 4 — CARD SYSTEM
 ============================== */
-
-#screen3 {
-    background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
-    color: var(--black);
-}
 
 #cardContainer {
     perspective: 1200px;
@@ -539,6 +367,7 @@ footer {
     position: relative;
     overflow: hidden;
     will-change: transform, opacity;
+    animation: cardBreathe 6s ease-in-out infinite, shadowDrift 8s ease-in-out infinite;
 }
 
 .card span {
@@ -570,16 +399,6 @@ footer {
 
 .card.animate {
     animation: cardPop 1.4s var(--ease-bounce);
-}
-
-.card.lucky {
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6);
-    animation: luckyGlow 1.2s infinite alternate;
-}
-
-.card.unlucky {
-    animation: unluckyShake 0.4s linear 2;
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
 }
 
 .controls {
@@ -624,30 +443,23 @@ footer {
     }
 }
 
-@keyframes luckyGlow {
-    from {
-        filter: brightness(1);
+@keyframes cardBreathe {
+    0%,
+    100% {
+        transform: scale(1);
     }
-    to {
-        filter: brightness(1.25);
+    50% {
+        transform: scale(1.02);
     }
 }
 
-@keyframes unluckyShake {
-    0% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-6px);
+@keyframes shadowDrift {
+    0%,
+    100% {
+        box-shadow: var(--shadow-soft);
     }
     50% {
-        transform: translateX(6px);
-    }
-    75% {
-        transform: translateX(-6px);
-    }
-    100% {
-        transform: translateX(0);
+        box-shadow: var(--shadow-strong);
     }
 }
 
@@ -665,99 +477,6 @@ footer {
 /* ==============================
    PART 5 — GLOBAL MOTION & RESPONSIVE
 ============================== */
-
-@keyframes breathe {
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.015);
-    }
-}
-
-#screen3.active .card {
-    animation: breathe 6s ease-in-out infinite;
-}
-
-@keyframes waveMotion {
-    0% {
-        transform: rotate(0deg);
-    }
-    20% {
-        transform: rotate(6deg);
-    }
-    40% {
-        transform: rotate(-6deg);
-    }
-    60% {
-        transform: rotate(4deg);
-    }
-    80% {
-        transform: rotate(-4deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-.wave {
-    animation: waveMotion 1.1s ease-in-out;
-}
-
-main::before,
-main::after {
-    content: "";
-    position: absolute;
-    inset: -20%;
-    background: radial-gradient(circle at 20% 30%, rgba(30, 144, 255, 0.15), transparent 40%), radial-gradient(circle at 80% 70%, rgba(255, 165, 0, 0.15), transparent 40%);
-    animation: floatBackground 30s linear infinite;
-    z-index: -1;
-}
-
-main::after {
-    animation-duration: 45s;
-    opacity: 0.6;
-}
-
-@keyframes floatBackground {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes shadowDrift {
-    0%,
-    100% {
-        box-shadow: var(--shadow-soft);
-    }
-    50% {
-        box-shadow: var(--shadow-strong);
-    }
-}
-
-.card {
-    animation-name: shadowDrift;
-    animation-duration: 8s;
-    animation-iteration-count: infinite;
-}
-
-@keyframes buttonIdle {
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.04);
-    }
-}
-
-.screen.active button {
-    animation: buttonIdle 7s ease-in-out infinite;
-}
 
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -814,10 +533,6 @@ main::after {
         transform: none;
         box-shadow: var(--shadow-soft);
     }
-}
-
-button:active {
-    transform: scale(0.96);
 }
 
 .card:active {

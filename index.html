@@ -9,45 +9,36 @@
 </head>
 
 <body>
-    <div id="loadingScreen">
-        <div class="loader-content">
-            <h1>🍻 Drunk Cards ni Ibot</h1>
-            <p>Loading game... Please wait</p>
-            <div class="loading-bar">
-                <div class="loading-fill"></div>
-            </div>
-        </div>
-    </div>
 
     <div id="app">
         <main>
-            <section id="screen1" class="screen">
-                <h1>Drunk Cards</h1>
+            <!-- Screen 1: Landing -->
+            <section id="screen1" class="screen active">
+                <h1>🍻 Drunk Cards 🍻</h1>
                 <button data-action="goto" data-screen="2">Click here to get drunk</button>
             </section>
 
+            <!-- Screen 2: Instructions -->
             <section id="screen2" class="screen">
-                <h2>Welcome to Drunk Cards made for people who love to drink.</h2>
+                <h2>Welcome to Drunk Cards</h2>
                 <p><strong>Rules:</strong></p>
-                <p>Everytime a person skips a card, drink twice.</p>
-                <p>That's all, enjoy the game!</p>
+                <p>Every time a person skips a card, drink twice.</p>
                 <button data-action="start-game">Play Now</button>
             </section>
 
+            <!-- Screen 3: Game -->
             <section id="screen3" class="screen">
                 <div id="gameArea">
                     <div id="cardContainer">
                         <div id="card" class="card">
-                            <div class="card-front">
-                                <span id="cardText"></span>
-                            </div>
+                            <span id="cardText"></span>
                         </div>
                     </div>
                     <div class="controls">
                         <button data-action="next-card">Next Card</button>
                         <button data-action="undo-card">Undo</button>
-                        <div id="counter">Card 0 / 104</div>
                     </div>
+                    <div id="counter">Card 0 / 104</div>
                 </div>
             </section>
         </main>

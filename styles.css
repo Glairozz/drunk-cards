@@ -1,5 +1,6 @@
 :root {
     --primary: #4682b4;
+    /* Steel Blue */
     --primary-dark: #2f5a7a;
     --primary-light: #a9cce3;
     --bg-dark: #1a2a3a;
@@ -61,7 +62,7 @@ body::before {
 }
 
 
-/* Floating Bubbles */
+/* Floating Bubbles - These are static in CSS; for random, see JS below */
 
 .bubble {
     position: absolute;
@@ -245,6 +246,8 @@ button {
     letter-spacing: 1px;
     box-shadow: 0 4px 15px rgba(70, 130, 180, 0.4);
     margin: 10px;
+    min-height: 50px;
+    /* Touch-friendly */
 }
 
 button:hover {
@@ -436,7 +439,31 @@ button:hover::before {
 }
 
 
-/* Responsive Design */
+/* Enhanced Responsive Design for Mobile */
+
+@media (max-width: 1024px) {
+    .screen {
+        width: 95vw;
+        height: 85vh;
+        padding: 1.8rem;
+    }
+    h1 {
+        font-size: 3rem;
+        letter-spacing: 2px;
+    }
+    h2 {
+        font-size: 1.8rem;
+    }
+    .card {
+        height: 320px;
+        font-size: 1.4rem;
+        padding: 1.5rem;
+    }
+    button {
+        padding: 14px 35px;
+        font-size: 1rem;
+    }
+}
 
 @media (max-width: 768px) {
     .screen {
@@ -453,6 +480,7 @@ button:hover::before {
     .card {
         height: 300px;
         font-size: 1.3rem;
+        padding: 1.2rem;
     }
     .controls {
         flex-direction: column;
@@ -460,23 +488,104 @@ button:hover::before {
     }
     .controls button {
         width: 100%;
+        padding: 12px 30px;
+    }
+    p {
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 480px) {
+    .screen {
+        width: 98vw;
+        height: 90vh;
+        padding: 1rem;
+        border-radius: 20px;
+    }
     h1 {
         font-size: 2.5rem;
+        margin-bottom: 0.8rem;
     }
     h2 {
         font-size: 1.5rem;
+        margin-bottom: 1rem;
     }
     .card {
         height: 250px;
         font-size: 1.1rem;
+        padding: 1rem;
     }
     button {
         padding: 12px 30px;
         font-size: 1rem;
+        margin: 5px;
+    }
+    p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    #counter {
+        font-size: 0.8rem;
+    }
+    footer {
+        font-size: 0.6rem;
+        bottom: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .screen {
+        width: 100vw;
+        height: 95vh;
+        padding: 0.8rem;
+    }
+    h1 {
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+    h2 {
+        font-size: 1.3rem;
+    }
+    .card {
+        height: 200px;
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    button {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+        min-height: 45px;
+    }
+    p {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* Landscape Orientation for Mobile */
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .screen {
+        height: 95vh;
+        padding: 1rem;
+    }
+    h1 {
+        font-size: 2.2rem;
+    }
+    h2 {
+        font-size: 1.4rem;
+    }
+    .card {
+        height: 180px;
+        font-size: 1rem;
+    }
+    .controls {
+        flex-direction: row;
+        gap: 5px;
+    }
+    .controls button {
+        width: auto;
+        padding: 8px 20px;
     }
 }
 
@@ -646,142 +755,5 @@ button {
     }
     100% {
         transform: scale(1);
-    }
-}
-
-@keyframes swing {
-    20% {
-        transform: rotate(15deg);
-    }
-    40% {
-        transform: rotate(-10deg);
-    }
-    60% {
-        transform: rotate(5deg);
-    }
-    80% {
-        transform: rotate(-5deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes tada {
-    0% {
-        transform: scale(1);
-    }
-    10%,
-    20% {
-        transform: scale(0.9) rotate(-3deg);
-    }
-    30%,
-    50%,
-    70%,
-    90% {
-        transform: scale(1.1) rotate(3deg);
-    }
-    40%,
-    60%,
-    80% {
-        transform: scale(1.1) rotate(-3deg);
-    }
-    100% {
-        transform: scale(1) rotate(0);
-    }
-}
-
-@keyframes wobble {
-    0% {
-        transform: translateX(0%);
-    }
-    15% {
-        transform: translateX(-25%) rotate(-5deg);
-    }
-    30% {
-        transform: translateX(20%) rotate(3deg);
-    }
-    45% {
-        transform: translateX(-15%) rotate(-3deg);
-    }
-    60% {
-        transform: translateX(10%) rotate(2deg);
-    }
-    75% {
-        transform: translateX(-5%) rotate(-1deg);
-    }
-    100% {
-        transform: translateX(0%);
-    }
-}
-
-@keyframes jello {
-    0%,
-    11.1%,
-    100% {
-        transform: translate3d(0, 0, 0);
-    }
-    22.2% {
-        transform: skewX(-12.5deg) skewY(-12.5deg);
-    }
-    33.3% {
-        transform: skewX(6.25deg) skewY(6.25deg);
-    }
-    44.4% {
-        transform: skewX(-3.125deg) skewY(-3.125deg);
-    }
-    55.5% {
-        transform: skewX(1.5625deg) skewY(1.5625deg);
-    }
-    66.6% {
-        transform: skewX(-0.78125deg) skewY(-0.78125deg);
-    }
-    77.7% {
-        transform: skewX(0.390625deg) skewY(0.390625deg);
-    }
-    88.8% {
-        transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
-    }
-}
-
-@keyframes heartBeat {
-    0% {
-        transform: scale(1);
-    }
-    14% {
-        transform: scale(1.3);
-    }
-    28% {
-        transform: scale(1);
-    }
-    42% {
-        transform: scale(1.3);
-    }
-    70% {
-        transform: scale(1);
-    }
-}
-
-@keyframes rubberBand {
-    0% {
-        transform: scale3d(1, 1, 1);
-    }
-    30% {
-        transform: scale3d(1.25, 0.75, 1);
-    }
-    40% {
-        transform: scale3d(0.75, 1.25, 1);
-    }
-    50% {
-        transform: scale3d(1.15, 0.85, 1);
-    }
-    65% {
-        transform: scale3d(0.95, 1.05, 1);
-    }
-    75% {
-        transform: scale3d(1.05, 0.95, 1);
-    }
-    100% {
-        transform: scale3d(1, 1, 1);
     }
 }

@@ -5,11 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const cardTextEl = document.getElementById("cardText");
     const counterEl = document.getElementById("counter");
 
-    // Complete card deck
     const cards = [
         "Take 1 shot", "Take 2 shots", "Give 1 shot", "Give 2 shots", "Everyone drinks",
-        "You drink", "Pick a buddy then drink together", "Bottoms up!", "Truth or drink",
-        "Dare or drink", "Last to touch a wall drinks", "Last person to stand up will take drink",
+        "You drink", "Pick a buddy then drink together", "Bottoms up!", "Pick someone that will ask you Truth. If you refuse, you drink",
+        "Pick someone that will ask you Dare. If you refuse, you drink", "Last person to touch a wall drinks", "Last person to stand up will take drink",
         "Pick one, Left or Right. Then person of your choice drinks", "Reverse the order",
         "Make a rule for 3 rounds. Everytime someone breaks it, they drink",
         "Drink without using your both hands, if you failed, drink again normally(using hands)",
@@ -53,7 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
         "Everyone say their favourite color. The persons with the same color drinks", "Males drinks", "Females drink",
         "Choose a word and then everyone must go clockwise dsaying words that rhyme with that word. The first one to fail must drink",
         "Stay completely still like a statue for 1 round",
-        "Starting with you clockwise, name countries in Europe, The person unable to name drinks"
+        "Starting with you clockwise, name countries in Europe, The person unable to name drinks", "Speak English only for 2 rounds",
+        "Starting with you clockwise, name different US States. First person who failed drinks", "Starting with you clockwise, name different US Presidents. First person who failed drinks",
+        "The person who arrived last drinks", "The person who arrived first gives a drink to someone", "Make a funny face, the person who laughs drinks",
+        "The person wearing the most colors drinks", "The person with the most accessories drinks", "The person who is most active on social media drinks",
+        "The person who is the most fashionable drinks", "The person who is the most athletic drinks"
     ];
 
     let deck = [];
@@ -127,10 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Start on first screen by default
     goToScreen(1);
 
-    // Wave animation every 10 seconds
     setInterval(() => {
         if (cardEl) {
             cardEl.classList.add("wave");
@@ -138,6 +139,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 10000);
 
-    // Initial shuffle
     shuffleDeck();
 });

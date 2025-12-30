@@ -56,7 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Starting with you clockwise, name different US States. First person who failed drinks", "Starting with you clockwise, name different US Presidents. First person who failed drinks",
         "The person who arrived last drinks", "The person who arrived first gives a drink to someone", "Make a funny face, the person who laughs drinks",
         "The person wearing the most colors drinks", "The person with the most accessories drinks", "The person who is most active on social media drinks",
-        "The person who is the most fashionable drinks", "The person who is the most athletic drinks"
+        "The person who is the most fashionable drinks", "The person who is the most athletic drinks", "Starting with you clockwise, name different fantasy of Arjann Patok. First person who failed drinks",
+        "Starting with you clockwise, name different K-Pop groups. First person who failed drinks"
     ];
 
     let deck = [];

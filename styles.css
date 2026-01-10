@@ -40,6 +40,40 @@ body::before {
     z-index: -1;
 }
 
+/* Floating Bubbles Animation */
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.4;
+    }
+    90% {
+        opacity: 0.2;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.bubble {
+    position: fixed;
+    border-radius: 50%;
+    background: linear-gradient(45deg, rgba(70, 130, 180, 0.1), rgba(169, 204, 227, 0.2));
+    pointer-events: none;
+    animation: floatUp linear infinite;
+}
+
+.bubble:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 15s; animation-delay: 0s; }
+.bubble:nth-child(2) { width: 60px; height: 60px; left: 20%; animation-duration: 12s; animation-delay: 2s; }
+.bubble:nth-child(3) { width: 100px; height: 100px; left: 35%; animation-duration: 18s; animation-delay: 4s; }
+.bubble:nth-child(4) { width: 40px; height: 40px; left: 50%; animation-duration: 10s; animation-delay: 1s; }
+.bubble:nth-child(5) { width: 70px; height: 70px; left: 65%; animation-duration: 14s; animation-delay: 3s; }
+.bubble:nth-child(6) { width: 90px; height: 90px; left: 80%; animation-duration: 16s; animation-delay: 5s; }
+.bubble:nth-child(7) { width: 50px; height: 50px; left: 90%; animation-duration: 11s; animation-delay: 2.5s; }
+
 
 /* Screen Management */
 
@@ -60,7 +94,11 @@ body::before {
     border: 1px solid var(--glass-border);
     box-shadow: var(--shadow);
     animation: fadeIn 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
 }
+
+
 
 .screen.active {
     display: flex;
@@ -76,6 +114,18 @@ h1 {
     letter-spacing: 4px;
     color: var(--primary-light);
     text-shadow: 0 0 20px rgba(70, 130, 180, 0.6);
+    animation: titlePulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes titlePulse {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 20px rgba(70, 130, 180, 0.6);
+    }
+    100% {
+        transform: scale(1.05);
+        text-shadow: 0 0 30px rgba(70, 130, 180, 0.9), 0 0 50px rgba(70, 130, 180, 0.4);
+    }
 }
 
 h2 {
@@ -94,7 +144,7 @@ p {
 /* Buttons */
 
 button {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
     border: none;
     padding: 15px 40px;
@@ -102,22 +152,43 @@ button {
     font-weight: bold;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 4px 15px rgba(70, 130, 180, 0.4);
+    box-shadow: 0 4px 15px rgba(70, 130, 180, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     margin: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 button:hover {
-    background: var(--primary-light);
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
     color: var(--bg-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(70, 130, 180, 0.6);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(70, 130, 180, 0.7);
 }
 
 button:active {
-    transform: translateY(0);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 4px 15px rgba(70, 130, 180, 0.5);
 }
 
 
@@ -133,7 +204,7 @@ button:active {
 .card {
     width: 100%;
     height: 100%;
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -142,11 +213,15 @@ button:active {
     color: var(--bg-dark);
     font-size: 1.5rem;
     font-weight: 800;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 20px rgba(70, 130, 180, 0.3);
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    background-clip: padding-box;
 }
+
+
 
 .card::after {
     content: "DRUNK";
@@ -156,6 +231,12 @@ button:active {
     font-size: 0.8rem;
     color: var(--primary);
     opacity: 0.3;
+    animation: textPulse 2s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
 }
 
 #counter {
@@ -163,6 +244,23 @@ button:active {
     font-size: 0.9rem;
     color: var(--primary-light);
     opacity: 0.8;
+    padding: 8px 16px;
+    background: var(--glass-bg);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(5px);
+    animation: counterPulse 2s ease-in-out infinite;
+}
+
+@keyframes counterPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
 }
 
 .controls {
@@ -176,44 +274,156 @@ button:active {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px) scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px) rotate(-5deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px) rotate(5deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(-50px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-25px);
+    }
+    70% {
+        transform: scale(0.9) translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Random entrance animations for buttons */
+button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(70, 130, 180, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+    animation: bounceIn 0.6s ease-out;
+}
+
+button:nth-child(2n) {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+button:nth-child(3n) {
+    animation: slideInRight 0.6s ease-out;
+}
+
 .flip {
-    animation: flipAnim 0.6s ease;
+    animation: flipAnim 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 @keyframes flipAnim {
     0% {
-        transform: rotateY(0deg) scale(1);
+        transform: rotateY(0deg) scale(1) rotateZ(0deg);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+    25% {
+        transform: rotateY(45deg) scale(1.05) rotateZ(2deg);
+        box-shadow: 0 20px 40px rgba(70, 130, 180, 0.4);
     }
     50% {
-        transform: rotateY(90deg) scale(1.1);
+        transform: rotateY(90deg) scale(1.15) rotateZ(-2deg);
+        box-shadow: 0 25px 50px rgba(70, 130, 180, 0.6);
+    }
+    75% {
+        transform: rotateY(135deg) scale(1.05) rotateZ(2deg);
+        box-shadow: 0 20px 40px rgba(70, 130, 180, 0.4);
     }
     100% {
-        transform: rotateY(0deg) scale(1);
+        transform: rotateY(360deg) scale(1) rotateZ(0deg);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     }
 }
 
 .wave {
-    animation: waveAnim 1s ease-in-out;
+    animation: waveAnim 2s ease-in-out;
 }
 
 @keyframes waveAnim {
-    0%,
-    100% {
-        transform: rotate(0deg);
+    0%, 100% {
+        transform: rotate(0deg) translateY(0px);
     }
     25% {
-        transform: rotate(-2deg);
+        transform: rotate(-3deg) translateY(-5px);
+    }
+    50% {
+        transform: rotate(0deg) translateY(0px);
     }
     75% {
-        transform: rotate(2deg);
+        transform: rotate(3deg) translateY(-5px);
+    }
+}
+
+/* Shake animation for errors */
+.shake {
+    animation: shakeAnim 0.5s ease-in-out;
+}
+
+@keyframes shakeAnim {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* Glow animation for special cards */
+.glow {
+    animation: glowAnim 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glowAnim {
+    0% {
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 20px rgba(70, 130, 180, 0.3);
+    }
+    100% {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 40px rgba(70, 130, 180, 0.8);
     }
 }
 

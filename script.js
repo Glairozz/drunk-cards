@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Make a rule for 3 rounds. Everytime someone breaks it, they drink",
         "Drink without using your both hands, if you failed, drink again normally(using hands)",
         "Drink with your left hand", "Drink with your right hand", "Who ever checks their phone for 3 rounds drinks",
-        "JUDGE, the person with the best outfit takes a drinks", "Drink if you're single", "Drink if you're taken",
+        "JUDGE, the person with the best outfit takes a drink", "Drink if you're single", "Drink if you're taken",
         "Drink if you wore black", "Drink if you wore a multiple colored outfit", "Drink if you’re the youngest",
         "Drink if you’re the oldest", "Starting with you clockwise, everyone says a word. First one to hesitate drinks",
         "Starting with you clockwise, name different Currencies. First person who failed drinks",
@@ -42,15 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
         "Starting with you clockwise, name different fruits. First person who failed drinks", "Everyone cheers and drinks",
         "Make a toast", "The most nerdy person drinks", "The floor is lava, the person who touch the floor drinks",
         "The biggest shoe size drinks", "The person with the longest hair drinks",
-        "The who has the most circle of friend drinks", "Double the next card", "Triple the next card",
+        "The person who has the most circle of friends drinks", "Double the next card", "Triple the next card",
         "Lucky card – no drinking", "Unlucky card – drink double", "Everyone drinks", "Raise your right hand for 1 round",
-        "Spin the bottle, who ever points the battle drinks", "The person who has the nice teeths drinks",
+        "Spin the bottle, who ever points the battle drinks", "The person who has the nice teeth drinks",
         "The person who has the biggest ears drinks",
         "Starting with you clockwise, perform an animal sounds. First person who failed drinks",
         "Starting with you clockwise, name different Disney movies. First person who failed drinks",
         "The person who loves to eat drinks", "Shortest person drinks", "Tallest person drinks",
         "Everyone say their favourite color. The persons with the same color drinks", "Males drinks", "Females drink",
-        "Choose a word and then everyone must go clockwise dsaying words that rhyme with that word. The first one to fail must drink",
+        "Choose a word and then everyone must go clockwise saying words that rhyme with that word. The first one to fail must drink",
         "Stay completely still like a statue for 1 round",
         "Starting with you clockwise, name countries in Europe, The person unable to name drinks", "Speak English only for 2 rounds",
         "Starting with you clockwise, name different US States. First person who failed drinks", "Starting with you clockwise, name different US Presidents. First person who failed drinks",
@@ -73,9 +73,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function animateCard() {
-        cardEl.classList.remove("flip", "wave");
+        cardEl.classList.remove("flip", "wave", "shake", "glow");
         void cardEl.offsetWidth;
         cardEl.classList.add("flip");
+        
+        // Random chance for special animations
+        const rand = Math.random();
+        setTimeout(() => {
+            if (rand < 0.3) {
+                cardEl.classList.add("wave");
+            } else if (rand < 0.4) {
+                cardEl.classList.add("glow");
+            }
+        }, 800);
     }
 
     function updateCounter() {
@@ -133,12 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     goToScreen(1);
 
-    setInterval(() => {
-        if (cardEl) {
-            cardEl.classList.add("wave");
-            setTimeout(() => cardEl.classList.remove("wave"), 1000);
-        }
-    }, 10000);
+
 
     shuffleDeck();
 });

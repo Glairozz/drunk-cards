@@ -4,60 +4,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drunk Cards ni Ibot</title>
+    <title>Drunk Cards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <meta name="google-site-verification" content="uXkX8GEPfQky8d5m04PzttME2c0K2LrMDgzHqv8q9BM" />
 </head>
 
 <body>
-    <!-- Floating Bubbles -->
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-
+    <div class="bg-pattern"></div>
+    <div class="particles" id="particles"></div>
+    
     <div id="app">
         <main>
-            <!-- Screen 1: Landing -->
             <section id="screen1" class="screen active">
-                <h1>🍻 Drunk Cards 🍻</h1>
-                <button data-action="goto" data-screen="2">Click here to get drunk</button>
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <span class="icon-inner">🍻</span>
+                    </div>
+                </div>
+                <h1 class="title">Drunk Cards</h1>
+                <p class="tagline">Party Game Edition</p>
+                <button class="premium-btn" data-action="goto" data-screen="2">
+                    <span class="btn-text">Start Party</span>
+                    <span class="btn-shine"></span>
+                </button>
             </section>
 
-            <!-- Screen 2: Instructions -->
             <section id="screen2" class="screen">
-                <h2>Welcome to Drunk Cards</h2>
-                <p><strong>Rules:</strong></p>
-                <p>Every time a person skips a card, drink twice.</p>
-                <button data-action="start-game">Play Now</button>
+                <div class="screen-header">
+                    <div class="screen-icon">📜</div>
+                    <h2>How to Play</h2>
+                </div>
+                <div class="rules-container">
+                    <div class="rule-item">
+                        <span class="rule-num">01</span>
+                        <p>Draw cards and complete the challenge</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-num">02</span>
+                        <p>When someone skips, they drink 2x</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-num">03</span>
+                        <p>Have fun and drink responsibly!</p>
+                    </div>
+                </div>
+                <button class="premium-btn primary" data-action="start-game">
+                    <span class="btn-text">Play Now</span>
+                    <span class="btn-shine"></span>
+                </button>
             </section>
 
-            <!-- Screen 3: Game -->
             <section id="screen3" class="screen">
-                <div id="gameArea">
-                    <div id="cardContainer">
-                        <div id="card" class="card">
-                            <span id="cardText"></span>
+                <div class="game-header">
+                    <div class="deck-visual">
+                        <div class="deck-stack">
+                            <div class="deck-card"></div>
+                            <div class="deck-card"></div>
+                            <div class="deck-card"></div>
                         </div>
                     </div>
-                    <div class="controls">
-                        <button data-action="next-card">Next Card</button>
-                        <button data-action="undo-card">Undo</button>
+                    <div id="counter" class="card-counter">
+                        <span class="counter-current">1</span>
+                        <span class="counter-divider">/</span>
+                        <span class="counter-total">104</span>
                     </div>
-                    <div id="counter">Card 0 / 104</div>
+                </div>
+                
+                <div id="cardContainer">
+                    <div id="card" class="card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <span class="card-suit">🍺</span>
+                                <span id="cardText" class="card-text"></span>
+                                <span class="card-decoration"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="premium-btn secondary" data-action="undo-card">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 10h10a5 5 0 0 1 5 5v2M3 10l6-6M3 10l6 6"/>
+                        </svg>
+                        <span>Undo</span>
+                    </button>
+                    <button class="premium-btn primary large" data-action="next-card">
+                        <span class="btn-text">Next Card</span>
+                        <span class="btn-shine"></span>
+                    </button>
                 </div>
             </section>
         </main>
-
-        <footer>
-            <p>&copy; 2025 Drunk Cards ni Ibot. All rights reserved.</p>
-        </footer>
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>

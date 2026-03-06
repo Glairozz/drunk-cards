@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const cardEl = document.getElementById("card");
     const cardTextEl = document.getElementById("cardText");
     const counterEl = document.getElementById("counter");
+    const counterCurrentEl = counterEl.querySelector('.counter-current');
+    const counterTotalEl = counterEl.querySelector('.counter-total');
+    const particlesContainer = document.getElementById('particles');
 
     const cards = [
         "Take 1 shot", "Take 2 shots", "Give 1 shot", "Give 2 shots", "Everyone drinks",
@@ -14,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Drink without using your both hands, if you failed, drink again normally(using hands)",
         "Drink with your left hand", "Drink with your right hand", "Who ever checks their phone for 3 rounds drinks",
         "JUDGE, the person with the best outfit takes a drink", "Drink if you're single", "Drink if you're taken",
-        "Drink if you wore black", "Drink if you wore a multiple colored outfit", "Drink if you’re the youngest",
-        "Drink if you’re the oldest", "Starting with you clockwise, everyone says a word. First one to hesitate drinks",
+        "Drink if you wore black", "Drink if you wore a multiple colored outfit", "Drink if you're the youngest",
+        "Drink if you're the oldest", "Starting with you clockwise, everyone says a word. First one to hesitate drinks",
         "Starting with you clockwise, name different Currencies. First person who failed drinks",
         "Ask the person on your right a general question. If they failed to answer, you drink. If they manage to answer, you drink",
         "Battle your left person in a thumb war. Loser drinks", "No one laughs for 1 round", "Staring contest – loser drinks",
@@ -26,14 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
         "Starting with you clockwise, name cartoon characters. The person who failed to name drinks",
         "Ask the person on your right a trivia question. If they failed to answer, they drink. If they manage to answer, you drink",
         "The person who most recently went on a date drinks", "Choose two people to drink",
-        "Drink if you haven't travelled outside the region", "Drink if you can drive", "Drink if you can’t swim",
+        "Drink if you haven't travelled outside the region", "Drink if you can drive", "Drink if you can't swim",
         "Drink if you love karaoke", "Tilt your head back and drink", "Take a penalty shot",
         "Compliment someone or drink together", "Starting with you clockwise, name different countries in Asia. First person who failed drinks",
         "Tell a joke. If everyone laughs they drink, if not you drink",
         "Pick one: Drink Twice or Choose a friend and drink 1 shot together", "Drink if you have a current fight with someone",
         "Text someone random or drink", "Drink if you're wearing a branded clothes", "The person who's wearing a jewelry",
         "The person who have tattoo will drink", "The person who's wearing a glasses drinks", "Drink if you have siblings",
-        "Drink if you’re an only child", "The person who have the most EX drink twice", "Drink if you hate spicy food",
+        "Drink if you're an only child", "The person who have the most EX drink twice", "Drink if you hate spicy food",
         "Take 3 sips", "Give 3 sips", "Drink with the person on your left", "Drink with the person on your right",
         "Starting with you clockwise, name different car brands. First person who failed drinks",
         "Starting with you clockwise, name different Ariana Grande songs. First person who failed drinks",
@@ -57,12 +60,37 @@ document.addEventListener("DOMContentLoaded", () => {
         "The person who arrived last drinks", "The person who arrived first gives a drink to someone", "Make a funny face, the person who laughs drinks",
         "The person wearing the most colors drinks", "The person with the most accessories drinks", "The person who is most active on social media drinks",
         "The person who is the most fashionable drinks", "The person who is the most athletic drinks", "Starting with you clockwise, name different fantasy of Arjann Patok. First person who failed drinks",
-        "Starting with you clockwise, name different K-Pop groups. First person who failed drinks"
+        "Starting with you clockwise, name different K-Pop groups. First person who failed drinks", "Starting with you clockwise, name every exes of taylor swift", "Starting with you clockwise, name different movie series"
     ];
 
     let deck = [];
     let currentIndex = 0;
     let history = [];
+    let isAnimating = false;
+
+    function createParticles() {
+        const colors = ['#ff6b35', '#00d4aa', '#a855f7', '#ff8c5a'];
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 6 + 2;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const duration = Math.random() * 20 + 15;
+            const delay = Math.random() * 10;
+            const left = Math.random() * 100;
+            
+            particle.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                background: ${color};
+                left: ${left}%;
+                animation-duration: ${duration}s;
+                animation-delay: ${delay}s;
+                box-shadow: 0 0 ${size * 2}px ${color};
+            `;
+            particlesContainer.appendChild(particle);
+        }
+    }
 
     function shuffleDeck() {
         deck = [...cards];
@@ -72,78 +100,130 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function animateCard() {
-        cardEl.classList.remove("flip", "wave", "shake", "glow");
-        void cardEl.offsetWidth;
-        cardEl.classList.add("flip");
+    function animateCard(callback) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        cardEl.classList.remove('flipping', 'pop', 'special-wave', 'special-glow');
         
-        // Random chance for special animations
+        const cardFront = cardEl.querySelector('.card-front');
+        cardFront.classList.remove('special-glow');
+
+        void cardEl.offsetWidth;
+
+        cardEl.classList.add('flipping');
+
         const rand = Math.random();
+        
         setTimeout(() => {
-            if (rand < 0.3) {
-                cardEl.classList.add("wave");
-            } else if (rand < 0.4) {
-                cardEl.classList.add("glow");
+            callback();
+            cardEl.classList.add('pop');
+            
+            if (rand < 0.25) {
+                setTimeout(() => {
+                    cardEl.classList.add('special-wave');
+                }, 100);
+            } else if (rand < 0.35) {
+                setTimeout(() => {
+                    cardFront.classList.add('special-glow');
+                }, 100);
             }
-        }, 800);
+        }, 300);
+
+        setTimeout(() => {
+            isAnimating = false;
+        }, 600);
     }
 
     function updateCounter() {
-        counterEl.textContent = `Card ${currentIndex + 1} / ${deck.length}`;
+        counterCurrentEl.textContent = currentIndex + 1;
     }
 
-    function goToScreen(n) {
-        screens.forEach(s => s.classList.remove("active"));
-        const screen = document.getElementById("screen" + n);
-        if (screen) screen.classList.add("active");
+    function goToScreen(n, callback) {
+        const currentScreen = document.querySelector('.screen.active');
+        const nextScreen = document.getElementById('screen' + n);
+        
+        if (currentScreen) {
+            currentScreen.classList.add('exit');
+            setTimeout(() => {
+                currentScreen.classList.remove('active', 'exit');
+                nextScreen.classList.add('active');
+                if (callback) callback();
+            }, 300);
+        } else {
+            nextScreen.classList.add('active');
+            if (callback) callback();
+        }
     }
 
     function startGame() {
         shuffleDeck();
         currentIndex = 0;
         history = [];
-        cardTextEl.textContent = deck[currentIndex];
-        animateCard();
-        updateCounter();
-        history.push(deck[currentIndex]);
+        
+        counterTotalEl.textContent = deck.length;
+        
+        animateCard(() => {
+            cardTextEl.textContent = deck[currentIndex];
+            updateCounter();
+            history.push(deck[currentIndex]);
+        });
+        
         goToScreen(3);
     }
 
     function nextCard() {
+        if (isAnimating) return;
+        
         currentIndex++;
+        
         if (currentIndex >= deck.length) {
-            cardTextEl.textContent = "No more cards! Reload to reshuffle 🍻";
-            animateCard();
+            animateCard(() => {
+                cardTextEl.textContent = "No more cards! Reload to reshuffle 🍻";
+                updateCounter();
+            });
             return;
         }
-        cardTextEl.textContent = deck[currentIndex];
-        animateCard();
-        updateCounter();
-        history.push(deck[currentIndex]);
+        
+        animateCard(() => {
+            cardTextEl.textContent = deck[currentIndex];
+            updateCounter();
+            history.push(deck[currentIndex]);
+        });
     }
 
     function undoCard() {
-        if (history.length <= 1) return;
+        if (isAnimating || history.length <= 1) return;
+        
         history.pop();
         currentIndex--;
-        cardTextEl.textContent = deck[currentIndex];
-        animateCard();
-        updateCounter();
+        
+        animateCard(() => {
+            cardTextEl.textContent = deck[currentIndex];
+            updateCounter();
+        });
     }
 
     buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
             const action = btn.dataset.action;
-            if (action === "goto") goToScreen(btn.dataset.screen);
-            if (action === "start-game") startGame();
-            if (action === "next-card") nextCard();
-            if (action === "undo-card") undoCard();
+            
+            if (action === 'goto') {
+                goToScreen(btn.dataset.screen);
+            }
+            if (action === 'start-game') {
+                startGame();
+            }
+            if (action === 'next-card') {
+                nextCard();
+            }
+            if (action === 'undo-card') {
+                undoCard();
+            }
         });
     });
 
-    goToScreen(1);
-
-
-
+    createParticles();
     shuffleDeck();
 });

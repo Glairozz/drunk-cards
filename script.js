@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isAnimating) return;
         isAnimating = true;
 
-        cardEl.classList.remove('flipping', 'pop', 'special-wave');
+        cardEl.classList.remove('flipping', 'pop', 'special-wave', 'flipped');
         
         const cardFront = cardEl.querySelector('.card-front');
         cardFront.classList.remove('special-glow');
@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         setTimeout(() => {
             callback();
+            cardEl.classList.remove('flipping');
             cardEl.classList.add('pop');
             
             if (rand < 0.2) {
@@ -146,9 +147,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     cardFront.classList.add('special-glow');
                 }, 150);
             }
-        }, 320);
+        }, 250);
 
         setTimeout(() => {
+            cardEl.classList.remove('pop');
             isAnimating = false;
         }, 700);
     }

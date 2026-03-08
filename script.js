@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const counterCurrentEl = counterEl.querySelector('.counter-current');
     const counterTotalEl = counterEl.querySelector('.counter-total');
     const particlesContainer = document.getElementById('particles');
+    const progressFill = document.querySelector('.progress-fill');
+    const deckCountEl = document.querySelector('.deck-count');
+    const soundToggle = document.getElementById('soundToggle');
 
     const cards = [
         "Take 1 shot", "Take 2 shots", "Give 1 shot", "Give 2 shots", "Everyone drinks",
@@ -67,16 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentIndex = 0;
     let history = [];
     let isAnimating = false;
+    let soundEnabled = false;
 
     function createParticles() {
-        const colors = ['#ff6b35', '#00d4aa', '#a855f7', '#ff8c5a'];
-        for (let i = 0; i < 15; i++) {
+        const colors = ['#ff6b35', '#00d4aa', '#a855f7', '#ff8c5a', '#00f5c4'];
+        for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
-            const size = Math.random() * 6 + 2;
+            const size = Math.random() * 5 + 2;
             const color = colors[Math.floor(Math.random() * colors.length)];
-            const duration = Math.random() * 20 + 15;
-            const delay = Math.random() * 10;
+            const duration = Math.random() * 18 + 12;
+            const delay = Math.random() * 12;
             const left = Math.random() * 100;
             
             particle.style.cssText = `
@@ -86,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 left: ${left}%;
                 animation-duration: ${duration}s;
                 animation-delay: ${delay}s;
-                box-shadow: 0 0 ${size * 2}px ${color};
+                box-shadow: 0 0 ${size * 3}px ${color};
             `;
             particlesContainer.appendChild(particle);
         }
@@ -100,11 +104,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function updateProgress() {
+        const progress = ((currentIndex + 1) / deck.length) * 100;
+        if (progressFill) {
+            progressFill.style.width = `${progress}%`;
+        }
+    }
+
+    function updateDeckCount() {
+        const remaining = deck.length - currentIndex - 1;
+        if (deckCountEl) {
+            deckCountEl.textContent = remaining;
+        }
+    }
+
     function animateCard(callback) {
         if (isAnimating) return;
         isAnimating = true;
 
-        cardEl.classList.remove('flipping', 'pop', 'special-wave', 'special-glow');
+        cardEl.classList.remove('flipping', 'pop', 'special-wave');
         
         const cardFront = cardEl.querySelector('.card-front');
         cardFront.classList.remove('special-glow');
@@ -119,24 +137,26 @@ document.addEventListener("DOMContentLoaded", () => {
             callback();
             cardEl.classList.add('pop');
             
-            if (rand < 0.25) {
+            if (rand < 0.2) {
                 setTimeout(() => {
                     cardEl.classList.add('special-wave');
-                }, 100);
+                }, 150);
             } else if (rand < 0.35) {
                 setTimeout(() => {
                     cardFront.classList.add('special-glow');
-                }, 100);
+                }, 150);
             }
-        }, 300);
+        }, 320);
 
         setTimeout(() => {
             isAnimating = false;
-        }, 600);
+        }, 700);
     }
 
     function updateCounter() {
         counterCurrentEl.textContent = currentIndex + 1;
+        updateProgress();
+        updateDeckCount();
     }
 
     function goToScreen(n, callback) {
@@ -149,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentScreen.classList.remove('active', 'exit');
                 nextScreen.classList.add('active');
                 if (callback) callback();
-            }, 300);
+            }, 350);
         } else {
             nextScreen.classList.add('active');
             if (callback) callback();
@@ -179,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (currentIndex >= deck.length) {
             animateCard(() => {
-                cardTextEl.textContent = "No more cards! Reload to reshuffle 🍻";
+                cardTextEl.textContent = "🎉 No more cards! \n\nThanks for playing! 🍻";
                 updateCounter();
             });
             return;
@@ -204,6 +224,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function toggleSound() {
+        soundEnabled = !soundEnabled;
+        const svg = soundToggle.querySelector('svg');
+        if (soundEnabled) {
+            svg.style.stroke = '#00d4aa';
+        } else {
+            svg.style.stroke = 'rgba(255, 255, 255, 0.5)';
+        }
+    }
+
     buttons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -223,6 +253,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    if (soundToggle) {
+        soundToggle.addEventListener('click', toggleSound);
+    }
 
     createParticles();
     shuffleDeck();

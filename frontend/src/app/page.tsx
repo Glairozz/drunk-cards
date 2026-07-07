@@ -10,7 +10,7 @@ export default function Home() {
   const { screen } = useGame()
 
   return (
-    <div id="app" className="w-full max-w-[480px] px-3 flex justify-center items-center min-h-screen relative z-10">
+    <div id="app" className="w-full max-w-[480px] px-3 sm:px-3 flex justify-center items-center min-h-screen min-h-dvh relative z-10">
       <main className="w-full relative">
         <AnimatePresence mode="wait">
           {screen === "landing" && <LandingScreen key="landing" />}

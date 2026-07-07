@@ -41,28 +41,28 @@ export function GameScreen() {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="screen-panel flex flex-col"
     >
-      <div className="w-full flex justify-between items-center mb-5">
-        <div className="flex items-center gap-3">
-          <div className="relative w-[50px] h-[70px]">
-            <div className="absolute w-[45px] h-[65px] rounded-lg bg-gradient-to-br from-[#1a1a24] to-[#0c0c12] border border-white/10 shadow-lg top-0 left-0 -translate-x-[10px] -translate-y-[5px]" />
-            <div className="absolute w-[45px] h-[65px] rounded-lg bg-gradient-to-br from-[#1a1a24] to-[#0c0c12] border border-white/10 shadow-lg top-[2px] left-[2px]" />
-            <div className="absolute w-[45px] h-[65px] rounded-lg bg-gradient-to-br from-[#1a1a24] to-[#0c0c12] border border-white/10 shadow-lg top-[4px] left-[4px] translate-x-[10px] translate-y-[5px]" />
+      <div className="w-full flex justify-between items-center mb-4 sm:mb-5">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="relative w-[40px] sm:w-[50px] h-[56px] sm:h-[70px]">
+            <div className="absolute w-[36px] sm:w-[45px] h-[52px] sm:h-[65px] rounded-lg bg-gradient-to-br from-[#1a1a24] to-[#0c0c12] border border-white/10 shadow-lg top-0 left-0 -translate-x-[8px] sm:-translate-x-[10px] -translate-y-[4px] sm:-translate-y-[5px]" />
+            <div className="absolute w-[36px] sm:w-[45px] h-[52px] sm:h-[65px] rounded-lg bg-gradient-to-br from-[#1a1a24] to-[#0c0c12] border border-white/10 shadow-lg top-[2px] left-[2px]" />
+            <div className="absolute w-[36px] sm:w-[45px] h-[52px] sm:h-[65px] rounded-lg bg-gradient-to-br from-[#1a1a24] to-[#0c0c12] border border-white/10 shadow-lg top-[4px] left-[4px] translate-x-[8px] sm:translate-x-[10px] translate-y-[4px] sm:translate-y-[5px]" />
           </div>
           <div className="flex flex-col gap-0.5">
-            <span className="text-[0.65rem] text-white/40 uppercase tracking-wider">Deck</span>
-            <span className="font-heading text-lg font-bold text-white">{Math.max(0, remaining)}</span>
+            <span className="text-[0.6rem] sm:text-[0.65rem] text-white/40 uppercase tracking-wider">Deck</span>
+            <span className="font-heading text-base sm:text-lg font-bold text-white">{Math.max(0, remaining)}</span>
           </div>
         </div>
 
-        <div className="flex items-baseline gap-[3px] px-4 py-2 rounded-3xl bg-white/[0.025] border border-white/10 relative">
+        <div className="flex items-baseline gap-[3px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-3xl bg-white/[0.025] border border-white/10 relative">
           <div className="absolute inset-[-3px] border border-[rgba(255,107,53,0.2)] rounded-[28px] animate-ring-pulse" />
-          <span className="font-heading text-xl font-bold text-[#ff6b35]">{currentIndex + 1}</span>
-          <span className="text-white/40 text-sm">/</span>
-          <span className="text-white/40 text-sm">{deck.length}</span>
+          <span className="font-heading text-lg sm:text-xl font-bold text-[#ff6b35]">{currentIndex + 1}</span>
+          <span className="text-white/40 text-xs sm:text-sm">/</span>
+          <span className="text-white/40 text-xs sm:text-sm">{deck.length}</span>
         </div>
       </div>
 
-      <div className="perspective-[1200px] w-full h-[300px] mb-5 relative">
+      <div className="perspective-[1200px] w-full h-[220px] sm:h-[300px] mb-4 sm:mb-5 relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={flipKey}
@@ -89,15 +89,15 @@ export function GameScreen() {
               <span className="absolute bottom-3 left-3 text-base opacity-30 -rotate-90">🍺</span>
               <span className="absolute bottom-3 right-3 text-base opacity-30 rotate-180">🍺</span>
 
-              <div className="flex flex-col items-center gap-3 z-10">
+              <div className="flex flex-col items-center gap-2 sm:gap-3 z-10 px-2 sm:px-0">
                 <motion.span
-                  className="text-4xl"
+                  className="text-3xl sm:text-4xl"
                   animate={{ scale: [1, 1.08, 1] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 >
                   🍺
                 </motion.span>
-                <span className="font-sans text-lg font-semibold text-[#1a1a2e] text-center leading-relaxed max-w-[90%]">
+                <span className="font-sans text-sm sm:text-lg font-semibold text-[#1a1a2e] text-center leading-relaxed max-w-[95%] sm:max-w-[90%]">
                   {isFinished ? "🎉 No more cards! \n\nThanks for playing! 🍻" : currentCard}
                 </span>
               </div>
@@ -106,11 +106,11 @@ export function GameScreen() {
         </AnimatePresence>
       </div>
 
-      <div className="flex gap-3.5 w-full justify-center items-center">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-3.5 w-full justify-center items-center">
         <button
           onClick={handleUndo}
           disabled={isAnimating}
-          className="shrink-0 inline-flex items-center justify-center gap-1.5 px-6 py-3.5 text-sm font-semibold text-white rounded-full bg-white/[0.025] border border-white/10 cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-white/[0.08] hover:border-white/15 hover:-translate-y-0.5 active:translate-y-[-1px] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-1.5 px-5 sm:px-6 py-3 sm:py-3.5 text-sm font-semibold text-white rounded-full bg-white/[0.025] border border-white/10 cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-white/[0.08] hover:border-white/15 hover:-translate-y-0.5 active:translate-y-[-1px] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Undo2 className="w-4 h-4" />
           Undo
@@ -119,18 +119,18 @@ export function GameScreen() {
         <button
           onClick={handleDraw}
           disabled={isAnimating}
-          className="group relative flex-1 max-w-[180px] inline-flex items-center justify-center px-12 py-[1.125rem] text-base font-semibold leading-none tracking-wide text-white border-none rounded-full cursor-pointer bg-gradient-to-r from-[#ff6b35] to-[#ff8c5a] shadow-[0_8px_30px_rgba(255,107,53,0.35)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(255,107,53,0.45),0_0_30px_rgba(255,107,53,0.3)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:scale-100"
+          className="group relative w-full sm:flex-1 sm:max-w-[220px] inline-flex items-center justify-center px-10 sm:px-12 py-4 sm:py-[1.125rem] text-sm sm:text-base font-semibold leading-none tracking-wide text-white border-none rounded-full cursor-pointer bg-gradient-to-r from-[#ff6b35] to-[#ff8c5a] shadow-[0_8px_30px_rgba(255,107,53,0.35)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(255,107,53,0.45),0_0_30px_rgba(255,107,53,0.3)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:scale-100"
         >
           <span className="absolute inset-0 bg-gradient-to-r from-white/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
           <span className="relative z-10 flex items-center gap-2">
             {isFinished ? "Reshuffle" : "Draw Card"}
-            {isFinished ? <Shuffle className="w-5 h-5" /> : <Beer className="w-5 h-5" />}
+            {isFinished ? <Shuffle className="w-4 h-4 sm:w-5 sm:h-5" /> : <Beer className="w-4 h-4 sm:w-5 sm:h-5" />}
           </span>
           <span className="absolute inset-[-2px] bg-gradient-to-r from-[#ff8c5a] to-[#a855f7] blur-[15px] opacity-0 group-hover:opacity-50 transition-opacity rounded-full -z-10" />
         </button>
       </div>
 
-      <div className="absolute bottom-6 left-8 right-8">
+      <div className="absolute bottom-4 sm:bottom-6 left-5 sm:left-8 right-5 sm:right-8">
         <div className="h-[3px] bg-white/10 rounded-sm overflow-hidden">
           <motion.div
             className="h-full rounded-sm bg-gradient-to-r from-[#ff6b35] to-[#a855f7]"
